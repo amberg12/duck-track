@@ -1,0 +1,1 @@
+Generates mating puzzles from wakformat data.
