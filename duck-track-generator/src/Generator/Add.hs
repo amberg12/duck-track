@@ -1,4 +1,4 @@
-module DuckTrack.Add
+module Generator.Add
   ( add
   ) where
 

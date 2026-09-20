@@ -11,7 +11,7 @@ cabal-version:      3.0
 --   http://haskell.org/cabal/users-guide/
 --
 -- The name of the package.
-name:               duck-track
+name:               duck-track-generator
 
 -- The package version.
 -- See the Haskell package versioning policy (PVP) for standards
@@ -62,14 +62,16 @@ library
     hs-source-dirs:   src
 
     -- Modules exposed
-    exposed-modules:  DuckTrack.Add
+    exposed-modules:  Generator.Add
 
+    -- Other library packages from which modules are imported.
     build-depends:    base ^>=4.20.2.0
 
+    -- Base language which the package is written in.
     default-language: GHC2024
 
 
-executable duck-track
+executable generator
     -- Import common warning flags.
     import:           warnings
 
@@ -84,7 +86,7 @@ executable duck-track
 
     -- Other library packages from which modules are imported.
     build-depends:    base ^>=4.20.2.0
-                    , duck-track
+                    , duck-track-generator
 
     -- Directories containing source files.
     hs-source-dirs:   app

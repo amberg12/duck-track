@@ -1,3 +1,3 @@
 build:
-    cabal build
-    cp $(cabal list-bin exe:duck-track) .
+    cabal build --project-dir=duck-track-generator exe:generator
+    cp $(cabal list-bin --project-dir=duck-track-generator exe:generator) .
