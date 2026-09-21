@@ -2,7 +2,7 @@
 [group('build')]
 build:
     cabal build --project-dir=duck-track-generator exe:generator
-    cp (cabal list-bin --project-dir=duck-track-generator exe:generator) .
+    cp $(cabal list-bin --project-dir=duck-track-generator exe:generator) .
 
 [doc('Format The Project')]
 [group('dev')]
