@@ -8,7 +8,8 @@ module Generator.Geometry
     , parseSquare
     , a1
     , a8
-    ) where
+    )
+where
 
 import Data.Char (toUpper)
 
@@ -59,14 +60,14 @@ fileFromChar c
 
 rankFromChar :: Char -> Maybe Rank
 rankFromChar c
-  | c >= '1' && c <= '8' = Just (toEnum (fromEnum c - fromEnum '1'))
-  | otherwise = Nothing
+    | c >= '1' && c <= '8' = Just (toEnum (fromEnum c - fromEnum '1'))
+    | otherwise = Nothing
 
 parseSquare :: String -> Maybe Square
 parseSquare [f, r] = do
-  f' <- fileFromChar f
-  r' <- rankFromChar r
-  pure $ Square { file = f', rank = r' }
+    f' <- fileFromChar f
+    r' <- rankFromChar r
+    pure $ Square{file = f', rank = r'}
 parseSquare _ = Nothing
 
 a1 :: Square

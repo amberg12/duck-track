@@ -2,7 +2,8 @@ module Generator.OptParse
     ( Options (..)
     , Positions (..)
     , parse
-    ) where
+    )
+where
 
 import Options.Applicative
 

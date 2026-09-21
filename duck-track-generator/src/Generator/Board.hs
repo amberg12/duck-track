@@ -5,16 +5,15 @@ module Generator.Board
     , Piece (..)
     , Board (..)
     , parseFen
-    ) where
+    )
+where
 
 import Control.Applicative
 import Control.Monad (guard, (>=>))
 import Data.Char (isDigit, isLower, isUpper)
-import Text.Read (readMaybe)
-
 import Data.Map.Strict qualified as Map
-
 import Generator.Geometry qualified as G
+import Text.Read (readMaybe)
 
 data Color
     = White
@@ -32,6 +31,7 @@ data Piece
     deriving (Show, Eq)
 
 type BoardPieces = Map.Map G.Square Piece
+
 type Castling = ([G.File], [G.File])
 
 data Board = Board
@@ -41,7 +41,8 @@ data Board = Board
     , boardEnPassant :: Maybe G.Square
     , boardHalfMove :: Int
     , boardFullMove :: Int
-    } deriving (Show)
+    }
+    deriving (Show)
 
 parseFen :: String -> Maybe Board
 parseFen fen = case words fen of
