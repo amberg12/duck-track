@@ -8,8 +8,9 @@ module Generator.Board
     ) where
 
 import Control.Applicative
+import Control.Monad (guard, (>=>))
 import Data.Char (isDigit, isLower, isUpper)
-import Data.Maybe (isJust)
+import Text.Read (readMaybe)
 
 import Data.Map.Strict qualified as Map
 
@@ -40,7 +41,7 @@ data Board = Board
     , boardEnPassant :: Maybe G.Square
     , boardHalfMove :: Int
     , boardFullMove :: Int
-    }
+    } deriving (Show)
 
 parseFen :: String -> Maybe Board
 parseFen fen = case words fen of
@@ -129,7 +130,7 @@ parseEnPassant sq = do
     pure $ Just sq'
 
 parseHalfMove :: String -> Maybe Int
-parseHalfMove = undefined
+parseHalfMove = readMaybe >=> (\x -> x <$ guard (x >= 0))
 
 parseFullMove :: String -> Maybe Int
-parseFullMove = undefined
+parseFullMove = readMaybe >=> (\x -> x <$ guard (x >= 1))
