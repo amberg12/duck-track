@@ -4,7 +4,7 @@ column-limit: none
 function-arrows: trailing
 comma-style: leading
 record-style: aligned
-import-export-style: diff-friendly
+import-export-style: leading
 import-grouping: legacy
 indent-wheres: false
 record-brace-space: false

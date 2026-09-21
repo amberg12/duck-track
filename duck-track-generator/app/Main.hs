@@ -1,10 +1,9 @@
 module Main
-  ( main
-  ) where
+    ( main
+    ) where
 
-import qualified Generator.Add as G
+import Generator.Add qualified as G
 
 main :: IO ()
 main = do
-  print $ G.add 2 2
-  
+    print $ G.add 2 2
