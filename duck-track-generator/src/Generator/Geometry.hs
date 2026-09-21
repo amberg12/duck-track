@@ -1,11 +1,14 @@
-module Generator.Geometry 
-  ( Square (..)
-  , File (..)
-  , Rank (..)
-  , offsetSquare
-  , a1
-  , a8
-  )where
+module Generator.Geometry
+    ( Square (..)
+    , File (..)
+    , Rank (..)
+    , offsetSquare
+    , fileFromChar
+    , a1
+    , a8
+    ) where
+
+import Data.Char (toUpper)
 
 data Square = Square
     { file :: !File
@@ -45,8 +48,15 @@ offsetSquare s (x, y)
     newRank = (+) y $ fromEnum $ rank s
     inBound n = 0 <= n && n <= 7
 
+fileFromChar :: Char -> Maybe File
+fileFromChar c
+    | c' >= 'A' && c' <= 'H' = Just (toEnum (fromEnum c' - fromEnum 'A'))
+    | otherwise = Nothing
+  where
+    c' = toUpper c
+
 a1 :: Square
-a1 = Square { file = FileA, rank = Rank1 }
+a1 = Square{file = FileA, rank = Rank1}
 
 a8 :: Square
-a8 = Square { file = FileA, rank = Rank8 }
+a8 = Square{file = FileA, rank = Rank8}

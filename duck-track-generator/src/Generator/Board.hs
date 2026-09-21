@@ -7,8 +7,9 @@ module Generator.Board
     , parseFen
     ) where
 
-import Data.Char (isDigit)
 import Control.Applicative
+import Data.Char (isDigit, isLower, isUpper)
+import Data.Maybe (isJust)
 
 import Data.Map.Strict qualified as Map
 
@@ -82,28 +83,44 @@ parsePieces :: String -> Maybe BoardPieces
 parsePieces pieces = case p of
     Nothing -> Nothing
     Just (m, _) -> Just m
-    where
-        p = foldl f (Just (Map.empty, G.a8)) pieces
-        f :: Maybe (BoardPieces, G.Square) -> Char -> Maybe (BoardPieces, G.Square)
-        f Nothing _ = Nothing
-        f (Just (m, prevSq)) c
-            | c == '/' = do
-                incRank <- prevSq `G.offsetSquare` (0, -1)
-                Just (m, G.Square { file = G.FileA, rank = G.rank incRank})
-            | isDigit c = do
-                nextSquare <- prevSq `G.offsetSquare` (read [c], 0) <|> Just prevSq
-                Just (m, nextSquare)
-            | otherwise = do
-                piece <- parsePiece c
-                nextSquare <- prevSq `G.offsetSquare` (1, 0) <|> Just prevSq
-                let newMap = Map.insert prevSq piece m
-                Just (newMap, nextSquare)
+  where
+    p = foldl f (Just (Map.empty, G.a8)) pieces
+    f :: Maybe (BoardPieces, G.Square) -> Char -> Maybe (BoardPieces, G.Square)
+    f Nothing _ = Nothing
+    f (Just (m, prevSq)) c
+        | c == '/' = do
+            incRank <- prevSq `G.offsetSquare` (0, -1)
+            Just (m, G.Square{file = G.FileA, rank = G.rank incRank})
+        | isDigit c = do
+            nextSquare <- prevSq `G.offsetSquare` (read [c], 0) <|> Just prevSq
+            Just (m, nextSquare)
+        | otherwise = do
+            piece <- parsePiece c
+            nextSquare <- prevSq `G.offsetSquare` (1, 0) <|> Just prevSq
+            let newMap = Map.insert prevSq piece m
+            Just (newMap, nextSquare)
 
 parseColor :: String -> Maybe Color
-parseColor = undefined
+parseColor "w" = Just White
+parseColor "b" = Just Black
+parseColor _ = Nothing
 
 parseCastling :: String -> Maybe Castling
-parseCastling = undefined
+parseCastling = foldl f (Just ([], []))
+  where
+    f Nothing _ = Nothing
+    f _ '-' = Just ([], [])
+    f (Just (wc, bc)) 'K' = Just (wc ++ [G.FileH], bc)
+    f (Just (wc, bc)) 'Q' = Just (wc ++ [G.FileA], bc)
+    f (Just (wc, bc)) 'k' = Just (wc, bc ++ [G.FileH])
+    f (Just (wc, bc)) 'q' = Just (wc, bc ++ [G.FileA])
+    f (Just (wc, bc)) c =
+        case G.fileFromChar c of
+            Nothing -> Nothing
+            Just file
+                | isUpper c -> Just (wc ++ [file], bc)
+                | isLower c -> Just (wc, bc ++ [file])
+                | otherwise -> Nothing
 
 parseEnPassant :: String -> Maybe (Maybe G.Square)
 parseEnPassant = undefined
