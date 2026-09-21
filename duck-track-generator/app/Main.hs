@@ -1,9 +1,10 @@
 module Main
     ( main
-    ) where
+    )
+where
 
-import Generator.Add qualified as G
+import Generator.OptParse qualified as OP
+import Generator.Run qualified as R
 
 main :: IO ()
-main = do
-    print $ G.add 2 2
+main = OP.parse >>= R.run >>= putStrLn

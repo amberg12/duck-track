@@ -22,4 +22,4 @@ sort-derived-classes: false
 sort-deriving-clauses: false
 trailing-section-operators: true
 unicode: never
-respectful: true
+respectful: false

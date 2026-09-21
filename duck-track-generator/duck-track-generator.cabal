@@ -62,10 +62,15 @@ library
     hs-source-dirs:   src
 
     -- Modules exposed
-    exposed-modules:  Generator.Add
+    exposed-modules:  Generator.Board
+                    , Generator.Geometry
+                    , Generator.OptParse
+                    , Generator.Run
 
     -- Other library packages from which modules are imported.
     build-depends:    base ^>=4.20.2.0
+                    , containers
+                    , optparse-applicative
 
     -- Base language which the package is written in.
     default-language: GHC2024
