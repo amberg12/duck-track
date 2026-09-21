@@ -4,6 +4,8 @@ module Generator.Geometry
     , Rank (..)
     , offsetSquare
     , fileFromChar
+    , rankFromChar
+    , parseSquare
     , a1
     , a8
     ) where
@@ -54,6 +56,18 @@ fileFromChar c
     | otherwise = Nothing
   where
     c' = toUpper c
+
+rankFromChar :: Char -> Maybe Rank
+rankFromChar c
+  | c >= '1' && c <= '8' = Just (toEnum (fromEnum c - fromEnum '1'))
+  | otherwise = Nothing
+
+parseSquare :: String -> Maybe Square
+parseSquare [f, r] = do
+  f' <- fileFromChar f
+  r' <- rankFromChar r
+  pure $ Square { file = f', rank = r' }
+parseSquare _ = Nothing
 
 a1 :: Square
 a1 = Square{file = FileA, rank = Rank1}

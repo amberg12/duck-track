@@ -123,7 +123,10 @@ parseCastling = foldl f (Just ([], []))
                 | otherwise -> Nothing
 
 parseEnPassant :: String -> Maybe (Maybe G.Square)
-parseEnPassant = undefined
+parseEnPassant "-" = Just Nothing
+parseEnPassant sq = do
+    sq' <- G.parseSquare sq
+    pure $ Just sq'
 
 parseHalfMove :: String -> Maybe Int
 parseHalfMove = undefined
